@@ -46,7 +46,7 @@ class tool_lifecycle_trigger_customfielddelay_generator extends testing_module_g
      * @return trigger_subplugin the created customfielddelay trigger.
      * @throws moodle_exception
      */
-    public static function create_trigger_with_workflow() {
+    public static function create_trigger_with_workflow($customfieldshortname) {
         // Create Workflow.
         $record = new stdClass();
         $record->id = null;
@@ -63,6 +63,7 @@ class tool_lifecycle_trigger_customfielddelay_generator extends testing_module_g
         // Set delay setting.
         $settings = new stdClass();
         $settings->delay = 10000;
+        $settings->customfield = $customfieldshortname;
         settings_manager::save_settings($trigger->id, settings_type::TRIGGER, $trigger->subpluginname, $settings);
 
         return $trigger;

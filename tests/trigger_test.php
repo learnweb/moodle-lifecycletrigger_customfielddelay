@@ -53,13 +53,15 @@ class tool_lifecycle_trigger_customfielddelay_testcase extends \advanced_testcas
         $this->setAdminUser();
 
         $this->processor = new processor();
-        $this->triggerinstance = \tool_lifecycle_trigger_customfielddelay_generator::create_trigger_with_workflow();
 
         $fieldcategory = self::getDataGenerator()->create_custom_field_category(['name' => 'Other fields']);
 
         $customfield = ['shortname' => 'test', 'name' => 'Custom field', 'type' => 'date',
             'categoryid' => $fieldcategory->get('id')];
-        $field = self::getDataGenerator()->create_custom_field($customfield);
+        self::getDataGenerator()->create_custom_field($customfield);
+
+        $this->triggerinstance = \tool_lifecycle_trigger_customfielddelay_generator::create_trigger_with_workflow(
+            $customfield['shortname']);
     }
 
     /**

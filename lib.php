@@ -107,7 +107,7 @@ class customfielddelay extends base_automatic {
         $mform->addHelpButton('delay', 'delay', 'lifecycletrigger_customfielddelay');
         $fields = $DB->get_records('customfield_field', array('type' => 'date'));
         $choices = array();
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             $choices[$field->shortname] = $field->name;
         }
 
