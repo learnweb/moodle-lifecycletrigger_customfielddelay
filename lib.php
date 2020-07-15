@@ -69,7 +69,7 @@ class customfielddelay extends base_automatic {
 
         $where = "{course}.id in (select cxt.instanceid from {context} cxt join {customfield_data} d " .
                     "ON d.contextid = cxt.id AND cxt.contextlevel=" . CONTEXT_COURSE . " " .
-                    "WHERE d.intvalue > 0 AND d.intvalue < :customfielddelay)";
+                    "WHERE d.fieldid = :customfieldid AND d.intvalue > 0 AND d.intvalue < :customfielddelay)";
         $params = array(
             "customfielddelay" => time() - $delay,
             "customfieldid" => $field->id,
