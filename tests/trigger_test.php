@@ -48,16 +48,18 @@ class tool_lifecycle_trigger_customfielddelay_testcase extends \advanced_testcas
     /** @var $processor processor Instance of the lifecycle processor. */
     private $processor;
 
+    private $fieldcategory;
+
     public function setUp() {
         $this->resetAfterTest(true);
         $this->setAdminUser();
 
         $this->processor = new processor();
 
-        $fieldcategory = self::getDataGenerator()->create_custom_field_category(['name' => 'Other fields']);
+        $this->fieldcategory = self::getDataGenerator()->create_custom_field_category(['name' => 'Other fields']);
 
         $customfield = ['shortname' => 'test', 'name' => 'Custom field', 'type' => 'date',
-            'categoryid' => $fieldcategory->get('id')];
+            'categoryid' => $this->fieldcategory->get('id')];
         self::getDataGenerator()->create_custom_field($customfield);
 
         $this->triggerinstance = \tool_lifecycle_trigger_customfielddelay_generator::create_trigger_with_workflow(
@@ -70,6 +72,32 @@ class tool_lifecycle_trigger_customfielddelay_testcase extends \advanced_testcas
     public function test_young_course() {
         $customfieldvalue = ['shortname' => 'test', 'value' => time() + 1000000];
         $course = $this->getDataGenerator()->create_course(['customfields' => [$customfieldvalue]]);
+
+        $recordset = $this->processor->get_course_recordset([$this->triggerinstance], []);
+        $found = false;
+        foreach ($recordset as $element) {
+            if ($course->id === $element->id) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertFalse($found, 'The course should not have been triggered');
+    }
+
+    /**
+     * Tests if courses, which have a customfield date in the future are not triggered by this plugin.
+     * In addition a second custom course field is added to the course, which has a value that could trigger the course.
+     */
+    public function test_young_course_with_second_customcourse_field() {
+
+        // Add additional course field
+        $customfield = ['shortname' => 'test2', 'name' => 'Custom field2', 'type' => 'date',
+            'categoryid' => $this->fieldcategory->get('id')];
+        self::getDataGenerator()->create_custom_field($customfield);
+
+        $customfieldvalue = ['shortname' => 'test', 'value' => time() + 1000000];
+        $customfieldvalue2 = ['shortname' => 'test2', 'value' => 100];
+        $course = $this->getDataGenerator()->create_course(['customfields' => [$customfieldvalue, $customfieldvalue2]]);
 
         $recordset = $this->processor->get_course_recordset([$this->triggerinstance], []);
         $found = false;
