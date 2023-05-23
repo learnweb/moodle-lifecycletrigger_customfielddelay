@@ -22,7 +22,7 @@
  * @copyright  2020 Tobias Reischmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace tool_lifecycle\trigger;
+namespace lifecycletrigger_customfielddelay;
 
 use tool_lifecycle\local\entity\trigger_subplugin;
 use tool_lifecycle\processor;
@@ -40,7 +40,7 @@ require_once(__DIR__ . '/generator/lib.php');
  * @copyright  2020 Tobias Reischmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class tool_lifecycle_trigger_customfielddelay_testcase extends \advanced_testcase {
+class trigger_test extends \advanced_testcase {
 
     /** @var $triggerinstance trigger_subplugin Instance of the trigger. */
     private $triggerinstance;
@@ -48,9 +48,17 @@ class tool_lifecycle_trigger_customfielddelay_testcase extends \advanced_testcas
     /** @var $processor processor Instance of the lifecycle processor. */
     private $processor;
 
+    /**
+     * @var \core_customfield\category_controller
+     */
     private $fieldcategory;
 
-    public function setUp() {
+    /**
+     * Setup for the Tests.
+     * @return void
+     * @throws \moodle_exception
+     */
+    public function setUp() : void {
         $this->resetAfterTest(true);
         $this->setAdminUser();
 
@@ -66,8 +74,13 @@ class tool_lifecycle_trigger_customfielddelay_testcase extends \advanced_testcas
             $customfield['shortname']);
     }
 
+
     /**
      * Tests if courses, which have a customfield date in the future are not triggered by this plugin.
+     * @covers \tool_lifecycle\trigger\customfielddelay
+     * @return void
+     * @throws \coding_exception
+     * @throws \dml_exception
      */
     public function test_young_course() {
         $customfieldvalue = ['shortname' => 'test', 'value' => time() + 1000000];
@@ -84,13 +97,18 @@ class tool_lifecycle_trigger_customfielddelay_testcase extends \advanced_testcas
         $this->assertFalse($found, 'The course should not have been triggered');
     }
 
+
     /**
      * Tests if courses, which have a customfield date in the future are not triggered by this plugin.
      * In addition a second custom course field is added to the course, which has a value that could trigger the course.
+     * @covers \tool_lifecycle\trigger\customfielddelay
+     * @return void
+     * @throws \coding_exception
+     * @throws \dml_exception
      */
     public function test_young_course_with_second_customcourse_field() {
 
-        // Add additional course field
+        // Add additional course field.
         $customfield = ['shortname' => 'test2', 'name' => 'Custom field2', 'type' => 'date',
             'categoryid' => $this->fieldcategory->get('id')];
         self::getDataGenerator()->create_custom_field($customfield);
@@ -110,8 +128,13 @@ class tool_lifecycle_trigger_customfielddelay_testcase extends \advanced_testcas
         $this->assertFalse($found, 'The course should not have been triggered');
     }
 
+
     /**
      * Tests if courses, which are older than the default of 190 days are triggered by this plugin.
+     * @covers \tool_lifecycle\trigger\customfielddelay
+     * @return void
+     * @throws \coding_exception
+     * @throws \dml_exception
      */
     public function test_old_course() {
 

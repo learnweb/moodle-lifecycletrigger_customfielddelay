@@ -22,7 +22,6 @@
  * @copyright  2018 Tobias Reischmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') || die();
 
 use tool_lifecycle\local\entity\trigger_subplugin;
 use tool_lifecycle\local\entity\workflow;
@@ -43,6 +42,7 @@ class tool_lifecycle_trigger_customfielddelay_generator extends testing_module_g
 
     /**
      * Creates a trigger customfielddelay for an artificial workflow without steps.
+     * @param String $customfieldshortname
      * @return trigger_subplugin the created customfielddelay trigger.
      * @throws moodle_exception
      */
