@@ -22,7 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Customfield Datum - Trigger';
-
 $string['delay'] = 'Zeit seit dem Datum des Customfield, bis ein Prozess gestartet wird';
 $string['delay_help'] = 'Der Trigger wird ausgeführt, falls die Zeit, die seit dem Customfield-Datum des Kurses vergangen ist, größer ist, als der angegebene Zeitraum.';
+$string['pluginname'] = 'Customfield Datum - Trigger';
