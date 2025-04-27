@@ -22,8 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['customfield'] = 'Customfield des Kurses';
-$string['customfield_help'] = 'Der Trigger überprüft den Wert des Customfields im Kurs.';
 $string['delay'] = 'Zeit seit dem Datum des Customfield, bis ein Prozess gestartet wird';
 $string['delay_help'] = 'Der Trigger wird ausgeführt, falls die Zeit, die seit dem Customfield-Datum des Kurses vergangen ist, größer ist, als der angegebene Zeitraum.';
+$string['plugindescription'] = 'Das ist ein Trigger für tool_lifecycle, der Kurse anhand eines bestimmten Customfields vom Typ Datum auswählt.';
 $string['pluginname'] = 'Customfield Datum - Trigger';
+$string['privacy:metadata'] = 'Das Plugin lifecycletrigger_customfielddelay speichert keine personenbezogenen Daten.';

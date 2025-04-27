@@ -23,9 +23,8 @@
  */
 
 
-$string['customfield'] = 'Customfield of the course';
-$string['customfield_help'] = 'The trigger checks the value saved in the course for this customfield.';
 $string['delay'] = 'Delay from customfield date of course until starting a process';
 $string['delay_help'] = 'The trigger will be invoked if the time passed since the customfield date of the course is longer than this delay.';
+$string['plugindescription'] = 'This is a trigger subplugin for tool_lifecycle which triggers courses according to a date customfield of the course.';
 $string['pluginname'] = 'Customfield date delay trigger';
 $string['privacy:metadata'] = 'The lifecycletrigger_customfielddelay plugin does not store any personal data.';
